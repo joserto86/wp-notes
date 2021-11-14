@@ -223,3 +223,25 @@ function ajax_action()
 //add_action('wp_ajax_nopriv_add_wishlist', 'ajax_action'); //usuario anonimo
 add_action('wp_ajax_add_wishlist', 'ajax_action'); //usuario logado
 ```
+
+## Añadir cronjob WP
+
+Ejemplo de tarea cron que envia un email cada hora
+
+```phpt
+function init_cron_job()
+{
+    if (!wp_next_scheduled('cron_send_mail_hook')) {
+        wp_schedule_event(time(), 'hourly', 'cron_send_mail_hook');
+    }
+}
+add_action('init', 'init_cron_job');
+
+function sendmail()
+{
+    $email = get_bloginfo('admin_email');
+
+    wp_mail($email, 'admin', 'hora de tu medicina!');
+}
+add_action('cron_send_mail_hook', 'sendmail');
+```
