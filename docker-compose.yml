@@ -1,0 +1,27 @@
+version: '3.1'
+services:
+  webserver:
+    build:
+      context: ./docker/wp
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: wpadmin
+      WORDPRESS_DB_PASSWORD: farsa
+      WORDPRESS_DB_NAME: wpplugins
+    volumes:
+      - ./wordpress:/var/www/html
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: wpplugins
+      MYSQL_USER: wpadmin
+      MYSQL_PASSWORD: farsa
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ./docker/db:/var/lib/mysql
+
