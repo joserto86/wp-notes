@@ -245,3 +245,34 @@ function sendmail()
 }
 add_action('cron_send_mail_hook', 'sendmail');
 ```
+## Ciclo de vida de un plugin
+
+En el siguiente código de ejemplo se muestran los hooks que se emplean para la activación, desactivación y desinstalación
+de cualquier plugin
+
+```phpt
+// 1. activate
+function custom_activation_function()
+{
+    //do something
+}
+register_activation_hook(__FILE__, 'custom_activation_function');
+
+// 2. deactivate
+function custom_deactivation_function()
+{
+    //do something
+}
+register_deactivation_hook(__FILE__, 'custom_deactivation_function');
+
+// 3. uninstall
+// create file called unistall.php in same path.
+```
+
+```phpt
+if (!defined('WP_UNINSTALL_PLUGIN')) {
+    exit();
+}
+
+//uninstall it
+```
